@@ -20,7 +20,6 @@ class LidarOdometry:
             '/kitti/point_cloud',
             self.listener_callback,
             10)
-        self.subscription  # prevent unused variable warning
 
         self.pc_odom_msg = Odometry()
 
@@ -119,10 +118,8 @@ class LidarOdometry:
 
     def perform_icp_point_to_plane(self, source, target):
 
-        ## TODO: Estimate normals of Source
         source.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=1, max_nn=30))
 
-        ## TODO: Estimate Normals of Target
         target.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=1, max_nn=30))
 
         threshold = 1.0  # Distance threshold for RANSAC
