@@ -30,12 +30,11 @@ Matching gates:
 - ORB descriptor (BFMatcher Hamming distance)
 
 ## Visualization
-Embedded (may require opening in browser):
+Embedded (local GIF):
 
-![Loop Closure Visualization](https://www.veed.io/view/de0e3fca-0bcb-409c-9aa3-c658f9a29c53)
+![Loop Closure Visualization](../readme_files/Screencast from 28-09-25 14_14_22-VEED.gif)
 
-If not displayed, open link:  
-https://www.veed.io/view/de0e3fca-0bcb-409c-9aa3-c658f9a29c53
+If the GIF does not render in some viewers, open the file directly under `readme_files/`.
 
 ## Running (example)
 ```bash
