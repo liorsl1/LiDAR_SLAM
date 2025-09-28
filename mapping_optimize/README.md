@@ -27,7 +27,7 @@ Embedded (local GIF):
 
 ![Loop Closure Visualization](../readme_files/mapping.gif)
 
-If the GIF does not render in some viewers, open the file directly under `readme_files/`.
+Green dots - car position, Blue dots - mapped features, Yellow dots - revisited features
 
 ## Running (example)
 ```bash
