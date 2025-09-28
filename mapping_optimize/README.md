@@ -32,7 +32,7 @@ Matching gates:
 ## Visualization
 Embedded (local GIF):
 
-![Loop Closure Visualization](../readme_files/Screencast from 28-09-25 14_14_22-VEED.gif)
+![Loop Closure Visualization](../readme_files/mapping.gif)
 
 If the GIF does not render in some viewers, open the file directly under `readme_files/`.
 
