@@ -12,13 +12,6 @@ Fuses camera ORB features with LiDAR scan ranges to create persistent landmarks,
 - Build pose-landmark constraints; detect revisits when old landmark IDs reappear.
 - Optimize (g2o-style) pose graph for drift reduction.
 
-## Key Components
-- visual_hashmap.py: Landmark clustering & descriptor-based update.
-- features_utils.py: ORB + DBSCAN + projection + scan association helpers.
-- graph_slam_data.py: Stores nodes, edges.
-- graph_slam_g2o.py: Simple optimizer/export.
-- vis_mapping_closure.py / visualizer.py: Live visualization & debug.
-
 ## Landmark Handling
 Two-tier clustering:
 1. Image-space DBSCAN → representative feature per blob.
