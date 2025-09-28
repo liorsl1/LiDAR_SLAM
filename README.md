@@ -5,6 +5,7 @@ A simple ROS2 LiDAR odometry demo using Open3D point-to-plane ICP, to showcase s
 ## Visualization
 Image snapshot:
 
+Lidar visualization is in rviz, with the output of the script as purple arrows, indicating pose (x,y,yaw) of the vehicle each frame.
 ![LiDAR Odometry Visualization](readme_files/img.png)
 
 Video (inline if supported):
