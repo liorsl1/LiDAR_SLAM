@@ -68,3 +68,38 @@ Re-observation of existing landmark IDs across spatial separation → added cons
 - Descriptor pruning / aging
 - Robust backend (switch to Ceres / g2o bindings)
 -
+
+## Optimization Stage (Pose & Landmark Refinement)
+After data collection and landmark association, a pose-graph + landmark graph is optimized:
+- Vertices: robot poses (SE2) + landmark points (PointXY).
+- Edges: relative odometry constraints + landmark observation (range/bearing converted to local Cartesian) constraints.
+- Artificial Gaussian noise is injected into initial pose and landmark estimates so the solver has a non-trivial problem (initial chi2 > 0).
+- Supported solvers (g2o): Gauss-Newton (default), Levenberg-Marquardt, Dogleg. Select via `method` parameter when constructing `GraphSLAM`.
+- Objective: minimize sum of squared residuals (odometry + landmark reprojection) jointly updating all poses and landmark positions.
+
+### Solver Comparison Snapshots
+Small thumbnails (initial vs optimized) for different solvers:
+
+| Levenberg Init | Levenberg Opt | Dogleg Init | Dogleg Opt |
+| -------------- | ------------- | ----------- | ---------- |
+| <img src="../readme_files/il.png" width="230"/> | <img src="../readme_files/ol.png" width="230"/> | <img src="../readme_files/id.png" width="230"/> | <img src="../readme_files/od.png" width="230"/> |
+
+### Final Solver Outputs
+
+**Levenberg-Marquardt**
+
+<img src="../readme_files/l.png" width="320" alt="Levenberg-Marquardt Optimized"/>
+
+**Dogleg**
+
+<img src="../readme_files/d.png" width="320" alt="Dogleg Optimized"/>
+
+Interpretation:
+- Initial graphs show dispersed (noisy) pose chain and landmarks.
+- Optimized results contract drift, align loop overlaps, and cluster landmark estimates more tightly.
+- Differences between solvers are subtle on small problems; Dogleg may converge faster, Levenberg can be steadier with higher initial error.
+
+Tuning hints:
+- Reduce `pose_std_dev` / `landmark_std_dev` to trust priors less (larger residuals → more adjustment).
+- Increase injected noise (in `add_odometry` / `add_landmark`) to stress-test convergence.
+- Swap solver by passing `method="levenberg"` or `method="dogleg"` to `GraphSLAM`.
