@@ -1,6 +1,6 @@
 # LiDAR_SLAM
 
-Lightweight educational SLAM sandbox with two focused modules:
+A lightweight but comprehensive SLAM project done to implement knowledge, and just for fun:
 
 1. LiDAR Odometry (point‑to‑plane ICP)
 2. Visual–LiDAR Mapping ,Loop Closure, and Graph Optimization (feature fusion + graph optimization)
