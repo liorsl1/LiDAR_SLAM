@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>simple_lidar_odometry_cpp</name>
+  <version>0.0.0</version>
+  <description>Minimal C++ port of the simple_lidar_odometry Python node.</description>
+  <maintainer email="carlos.argueta@lungteh.com">carlos</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+
+  <exec_depend>Open3D</exec_depend>
+  <build_depend>Open3D</build_depend>
+  <exec_depend>eigen</exec_depend>
+  <build_depend>eigen</build_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
