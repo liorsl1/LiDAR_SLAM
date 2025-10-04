@@ -3,7 +3,7 @@
 A lightweight but comprehensive SLAM project done to implement knowledge, and just for fun:
 
 1. LiDAR Odometry (point‑to‑plane ICP)
-2. Visual–LiDAR Mapping ,Loop Closure, and Graph Optimization (feature fusion + graph optimization)
+2. Visual–LiDAR Mapping ,Lidar projection and segmentation, Loop Closure, and Graph Optimization (feature fusion + graph optimization)
 
 ---
 ## 1. LiDAR Odometry Module
