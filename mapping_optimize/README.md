@@ -3,6 +3,8 @@
 Lightweight 2D mapping and loop-closure layer built on top of LiDAR odometry.  
 Fuses camera ORB features with LiDAR scan ranges to create persistent landmarks, manages them in a spatial hash map, and performs simple loop closure via landmark reuse + graph optimization.
 
+Also projects Lidar point-cloud to the left RGB image, and uses YOLOv8-seg to segment and match between objets in the image, and the Lidar points.
+
 ## Overview
 - Extract ORB keypoints, cluster with DBSCAN (reduce redundancy).
 - Project clustered keypoints to angles (camera -> bearing).
@@ -11,6 +13,11 @@ Fuses camera ORB features with LiDAR scan ranges to create persistent landmarks,
 - Insert / match in VisualHashMap (spatial + descriptor gating).
 - Build pose-landmark constraints; detect revisits when old landmark IDs reappear.
 - Optimize (g2o-style) pose graph for drift reduction.
+
+### Extras:
+- Use known transformation between the lidar and the RGB camera, to project lidar-to-image (keep points that only reside within the image)
+- Segment the RGB with YOLOv8-seg, then match between segmented pixels and 3D lidar points.
+- Then - both visualize on the image the segmented lidar points, and in 3D, publish back the segmented point cloud, to visualize on Rviz.
 
 ## Landmark Handling
 Two-tier clustering:
@@ -28,6 +35,15 @@ Embedded (local GIF):
 ![Loop Closure Visualization](../readme_files/mapping.gif)
 
 Green dots - car position, Blue dots - mapped features, Yellow dots - revisited features
+##
+![Projected Lidar 2D](../readme_files/detected_lidar_pixels.png)
+
+Projected lidar onto image with segmentation.
+##
+![Segmented Lidar](../readme_files/lidar_project_segment1.png)
+![Segmented Lidar](../readme_files/lidar_project_segment2.png)
+
+Segmented Lidar pointcloud with person and bicycle (with small delay).
 
 ## Running (example)
 ```bash

@@ -56,11 +56,13 @@ def extract_features(image):
     eps: The maximum distance between two samples for them to be considered as in the same neighborhood.
     min_samples: The number of samples (or total weight) in a neighborhood for a point to be considered as a core point.
 '''
-def extract_features_dbscan(image, eps=5, min_samples=3):
+def extract_features_dbscan(image, eps=5, min_samples=5, top_k=2):
     # Use a feature detector like ORB
     orb = cv2.ORB_create()
     keypoints, descriptors = orb.detectAndCompute(image, None)
 
+    # filter out keypoints and descriptors that are below 0.25 of image height
+    
     if keypoints:
         # Extract x, y coordinates of the keypoints
         coords = np.array([kp.pt for kp in keypoints])
@@ -80,32 +82,18 @@ def extract_features_dbscan(image, eps=5, min_samples=3):
             if label == -1:
                 continue  # Skip noise points
 
-            # Indices of keypoints in the current cluster
             indices = [i for i, lbl in enumerate(labels) if lbl == label]
-
-            #print("Cluster", label, "members", len(indices))
-
-            # Cluster's keypoints and their descriptors
             cluster_keypoints = [keypoints[i] for i in indices]
             cluster_descriptors = descriptors[indices] if descriptors is not None else []
-
-            #print(len(cluster_keypoints), len(cluster_descriptors))
-
-            # Calculate the centroid of the cluster
             centroid = np.mean([kp.pt for kp in cluster_keypoints], axis=0)
-            #print("centroid", centroid)
-
-            # Find the keypoint closest to the centroid
-            closest_index = np.argmin([np.linalg.norm(np.array(kp.pt) - centroid) for kp in cluster_keypoints])
-            #print("closest index", closest_index)
-            representative_keypoint = cluster_keypoints[closest_index]
-            representative_descriptor = cluster_descriptors[closest_index]
-
-            representative_keypoints.append(representative_keypoint)
-            representative_descriptors.append(representative_descriptor)
-
+            dists = [np.linalg.norm(np.array(kp.pt) - centroid) for kp in cluster_keypoints]
+            top_indices = np.argsort(dists)[:top_k]
+            for ti in top_indices:
+                representative_keypoints.append(cluster_keypoints[ti])
+                representative_descriptors.append(cluster_descriptors[ti])
         return representative_keypoints, np.array(representative_descriptors)
 
+    # Fallback if no keypoints
     return keypoints, descriptors
 
 def filter_keypoints_in_vertical_band(keypoints, descriptors, image_height, vertical_band_center, vertical_band_height):
